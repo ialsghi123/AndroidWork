@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView tvResult;
-
+    EditText et;
 
     // onCreate()
     // 액티비티(화면 객체)가 생성될때 호출되는 메소드
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn3 = findViewById(R.id.btn3);
 
         tvResult = findViewById(R.id.tvResult);
+        et = findViewById(R.id.et);
         final LinearLayout ll = findViewById(R.id.ll);   // Local inner 에서 사용할수 있는 것은
                                                         // 멤버변수, effective final !!
 
@@ -61,6 +63,47 @@ public class MainActivity extends AppCompatActivity {
             ll.setBackgroundColor(Color.rgb(164, 198, 57));
         });
 
+        // 방법4 : implement 한 클래스 사용
+        Button btnA = findViewById(R.id.btnA);
+        Button btnB = findViewById(R.id.btnB);
+        Button btnC = findViewById(R.id.btnC);
+        Button btnD = findViewById(R.id.btnD);
+        Button btnE = findViewById(R.id.btnE);
+        Button btnF = findViewById(R.id.btnF);
+
+        class MyListener implements View.OnClickListener{
+
+            String name;
+
+            public MyListener(String name) {this.name = name;}
+
+            @Override
+            public void onClick(View v) {
+                String tag = (String)v.getTag();
+                String text = (String)((Button)v).getText();  // getText() 는 CharSequence 객체 리턴
+                String msg = String.format("%s 버튼 %s 이 클릭[%s]", name, text, tag);
+                Log.d("myapp", msg);
+                tvResult.setText(msg);
+                et.setText(et.getText().append(name));
+            }
+        }
+
+        btnA.setOnClickListener(new MyListener("안녕1"));
+        btnB.setOnClickListener(new MyListener("안녕2"));
+        btnC.setOnClickListener(new MyListener("안녕3"));
+        btnD.setOnClickListener(new MyListener("안녕4"));
+        btnE.setOnClickListener(new MyListener("안녕5"));
+        btnF.setOnClickListener(new MyListener("안녕6"));
+
+        // 방법5 : 액티비티가 implement
+        Button btnClear = findViewById(R.id.btnClear);
+        btnClear.setOnClickListener(this);
+
+        // 연습
+        // +, - 버튼 누르면 tvResult 의 글씨가 점점 커지고/작아지게 하기
+        // getTextSize() : float 값 리턴
+       // TODO
+
 
 
 
@@ -75,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // 방법5 : 액티비티가 implement 한 것을 사용
+    @Override
+    public void onClick(View v) {
+        Log.d("myapp", "Clear 버튼이 클릭되었습니다.");
+        tvResult.setText("Clear버튼이 클릭되었습니다");
+        et.setText("");
+    }
 } // end Activity
 
 
