@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvResult = findViewById(R.id.tvResult);
         et = findViewById(R.id.et);
         final LinearLayout ll = findViewById(R.id.ll);   // Local inner 에서 사용할수 있는 것은
-                                                        // 멤버변수, effective final !!
+        // 멤버변수, effective final !!
 
         // 방법2 : 익명 클래스 (anonymous class) 사용.
         btn2.setOnClickListener(new View.OnClickListener() {
